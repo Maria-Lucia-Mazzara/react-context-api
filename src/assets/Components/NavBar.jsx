@@ -1,7 +1,10 @@
-
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
+import { useContext } from "react";
+import BudgetContesto from '../contexts/BudgetContext';
 
 function NavBar() {
+    const { modalitaBudget, setModalitaBudget } = useContext(BudgetContesto);
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid px-5">
@@ -27,6 +30,14 @@ function NavBar() {
                         </li>
 
                     </ul>
+                    <button
+                        className="btn btn-dark ms-auto"
+                        onClick={() => setModalitaBudget(!modalitaBudget)}
+                    >
+                        {modalitaBudget
+                            ? "Disattiva Modalità Budget"
+                            : "Attiva Modalità Budget"}
+                    </button>
                 </div>
 
             </div>
