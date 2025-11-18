@@ -4,6 +4,14 @@ import BudgetContesto from '../contexts/BudgetContext';
 
 function NavBar() {
     const { modalitaBudget, setModalitaBudget } = useContext(BudgetContesto);
+    let testoBottone;
+
+
+    if (modalitaBudget === true) {
+        testoBottone = "Disattiva Modalità Budget";
+    } else {
+        testoBottone = "Attiva Modalità Budget";
+    }
 
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,9 +42,7 @@ function NavBar() {
                         className="btn btn-dark ms-auto"
                         onClick={() => setModalitaBudget(!modalitaBudget)}
                     >
-                        {modalitaBudget
-                            ? "Disattiva Modalità Budget"
-                            : "Attiva Modalità Budget"}
+                        {testoBottone}
                     </button>
                 </div>
 
