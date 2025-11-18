@@ -1,71 +1,81 @@
-
-
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import BudgetContesto from "../contexts/BudgetContext";
 
 function Prodotti() {
 
     const [prodotto, setProdotto] = useState([]);
 
+
+    const { modalitaBudget } = useContext(BudgetContesto);
+
     useEffect(() => {
         axios
             .get("https://fakestoreapi.com/products")
             .then(response => {
-                console.log(response.data);
                 setProdotto(response.data);
             })
+            .catch(err => console.error(err));
     }, []);
 
+
+    let prodottiFiltrati;
+
+    if (modalitaBudget === true) {
+        prodottiFiltrati = prodotto.filter(item => item.price <= 30);
+    } else {
+        prodottiFiltrati = prodotto;
+    }
+
     return (
-        <>
-            <div className="container py-4">
-                <div className="row row-cols-1 row-cols-md-3 g-4">
+        <div className="container py-4">
+            <div className="row row-cols-1 row-cols-md-3 g-4">
 
-                    {prodotto.map((item) => (
-                        <div className="col" key={item.id}>
-                            <Link
-                                to={`/products/${item.id}`}
-                                className="text-decoration-none text-dark"
-                            >
-                                <div className="card h-100">
+                {prodottiFiltrati.map((item) => (
+                    <div className="col" key={item.id}>
+                        <Link
+                            to={`/products/${item.id}`}
+                            className="text-decoration-none text-dark"
+                        >
+                            <div className="card h-100">
 
-                                    <img
-                                        src={item.image}
-                                        alt={item.title}
-                                        className="card-img-top product-image p-3"
-                                        style={{ objectFit: "contain", height: "200px" }}
-                                    />
+                                <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    className="card-img-top product-image p-3"
+                                    style={{ objectFit: "contain", height: "200px" }}
+                                />
 
-                                    <div className="card-body">
-                                        <h5 className="card-title">{item.title}</h5>
-                                        <small className="text-muted">
-                                            Prezzo: {item.price}$
-                                        </small>
+                                <div className="card-body">
+                                    <h5 className="card-title">{item.title}</h5>
+                                    <small className="text-muted">
+                                        Prezzo: {item.price}$
+                                    </small>
 
-                                        <p className="mt-3">
-                                            <strong>Categoria:</strong> {item.category}
-                                        </p>
+                                    <p className="mt-3">
+                                        <strong>Categoria:</strong> {item.category}
+                                    </p>
 
-                                        <p>
-                                            <strong>Descrizione:</strong><br />
-                                            {item.description}
-                                        </p>
+                                    <p>
+                                        <strong>Descrizione:</strong><br />
+                                        {item.description}
+                                    </p>
 
-                                        <p><strong>Rate:</strong> {item.rating.rate}</p>
-                                        <p><strong>Rimanente:</strong> {item.rating.count} pezzi</p>
-                                    </div>
-
+                                    <p><strong>Rate:</strong> {item.rating.rate}</p>
+                                    <p><strong>Rimanente:</strong> {item.rating.count} pezzi</p>
                                 </div>
-                            </Link>
 
-                        </div>
-                    ))}
+                            </div>
+                        </Link>
+                    </div>
+                ))}
 
-                </div>
             </div>
-        </>
+        </div>
     );
 }
 
 export default Prodotti;
+
+

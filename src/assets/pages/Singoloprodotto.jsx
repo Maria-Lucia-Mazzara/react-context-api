@@ -62,13 +62,6 @@ export default function SingoloProdotto() {
                 <Link to="/products" className="btn btn-dark me-2">
                     Torna Indietro
                 </Link>
-
-                <a
-                    href={`/products/${Number(id) <= 20 ? Number(id) + 1 : alert("Prodotto non trovato")}`}
-                    className="btn btn-dark"
-                >
-                    Prodotto Successivo →
-                </a>
             </div>
         </>
     );

@@ -4,6 +4,7 @@ import BudgetContesto from '../contexts/BudgetContext';
 
 function NavBar() {
     const { modalitaBudget, setModalitaBudget } = useContext(BudgetContesto);
+
     let testoBottone;
 
 
